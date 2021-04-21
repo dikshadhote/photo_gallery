@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import ProgressBar from "./ProgressBar";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -20,20 +20,44 @@ const UploadForm = () => {
   };
   return (
     <form>
-    
-    <div style={{margin:"0 auto" }}>
-      <label style={{ backgroundColor:"#8824e0",color:"white",padding:"3px",borderRadius:"3px",textAlign:"right",float:"left",margin:"auto" }} > 
-          Upload
-          <input
-            type="file"
-            onChange={changeHandler}
-            style={{ display: "none" }}
-          />  
-      </label>
-      </div>
-      <div class="output">
-        {error && <div className="error">{error}</div>}
-        {file && <div>{file.name}</div>}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <label
+            style={{
+              backgroundColor: "#8824e0",
+              color: "white",
+              padding: "5px",
+              borderRadius: "3px",
+              textAlign: "right",
+              float: "left",
+              margin: "auto",
+            }}
+          >
+            Upload
+            <input
+              type="file"
+              onChange={changeHandler}
+              style={{ display: "none" }}
+            />
+          </label>
+        </div>
+        <div className="output">
+          {
+            //right side of && gives output when left side is true
+            error && <div className="error">{error}</div>
+          }
+          {file && <div style={{padding:"3px"}}>{file.name}</div>}
+          {
+            //pass 'file' to progessBar to track progress of uploading and 'setFile' to reset value of file to null after uploading of file
+            file &&<ProgressBar file={file} setFile={setFile}/>}
+        </div>
       </div>
     </form>
   );
