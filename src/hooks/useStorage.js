@@ -11,7 +11,8 @@ const useStorage = (file) => {
 
   useEffect(() => {
     //to upload name of file in db
-    const storageRef = photoStorage.ref(file.name);
+    // const storageRef = photoStorage.ref(file.name);
+    const storageRef = photoStorage.ref(`uploads/${file.name}`);
     //uploads selected image in storage
     storageRef.put(file).on(
       "state_changed",
@@ -23,15 +24,16 @@ const useStorage = (file) => {
       (err) => {
         setError(err);
       },
+
       async () => {
         //get url of image uploaded from db
         const url = await storageRef.getDownloadURL();
         setUrl(url);
       }
-    )
+    );
   }, [file]);
 
-  return { progress, url, error}
-}
+  return { progress, url, error };
+};
 
 export default useStorage;
