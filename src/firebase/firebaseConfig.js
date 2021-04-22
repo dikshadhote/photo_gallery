@@ -15,5 +15,6 @@ var firebaseConfig = {
 
   const photoStorage=firebase.storage();
   const photoFirestore=firebase.firestore();
+  const timeStamp=firebase.firestore.FieldPath.serverTimestamp;
 
-  export{photoStorage,photoFirestore};
+  export{photoStorage,photoFirestore,timeStamp};
