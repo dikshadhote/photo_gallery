@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { photoStorage ,photoFirestore, timeStamp } from "../firebase/firebaseConfig";
+import {
+  photoStorage,
+  photoFirestore,
+  timeStamp,
+} from "../firebase/firebaseConfig";
 
 const useStorage = (file) => {
   //to see upload progress of image
@@ -14,13 +18,13 @@ const useStorage = (file) => {
     // const storageRef = photoStorage.ref(file.name);
     const storageRef = photoStorage.ref(`uploads/${file.name}`);
     //creates collection in database  and store URL's in it
-    const collectionRef=photoFirestore.collection('images');
+    const collectionRef = photoFirestore.collection("images");
     //uploads selected image in storage
     storageRef.put(file).on(
       "state_changed",
       (snap) => {
         let percentageTransffered =
-          (snap.bytesTransferred * 100) / snap.totalBytes ;
+          (snap.bytesTransferred * 100) / snap.totalBytes;
         setProgress(percentageTransffered);
       },
       (err) => {
@@ -31,8 +35,8 @@ const useStorage = (file) => {
         //get url of image uploaded from db
         const url = await storageRef.getDownloadURL();
         //add url and timestamp in collection
-        const createdAt= timeStamp();
-        collectionRef.add({url,createdAt});
+        const createdAt = timeStamp();
+        collectionRef.add({ url, createdAt });
         setUrl(url);
       }
     );
